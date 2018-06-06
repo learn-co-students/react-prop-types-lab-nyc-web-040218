@@ -26,13 +26,31 @@ Product.propTypes = {
   hasWatermark: PropTypes.bool,
   color: PropTypes.oneOf(['white', 'eggshell-white', 'salmon']).isRequired,
   weight: (props, attribute) => {
-    // console.log(typeof(props[attribute]));
-    if (!(props[attribute] > 80 && props[attribute] < 300)){
-      return new Error(
-         'Wrong.'
-       );
-   }
- }
+
+    const weight = props[attribute];
+    
+    if (weight === undefined) {
+          return new Error('The `weight` prop is required.');
+        }
+
+        if (isNaN(weight)) {
+          return new Error('The `weight` prop is not a number.');
+        }
+
+        const isValidWeight = weight > 80 && weight < 300;
+
+        if (!isValidWeight) {
+          return new Error('The `weight` prop should range between 80 and 300.');
+        }
+      }
+   //
+   //  console.log(typeof(props[attribute]));
+   //  if (!(props[attribute] > 80 && props[attribute] < 300)){
+   //    return new Error(
+   //       'Wrong.'
+   //     );
+   // }
+
 };
 
 export default Product;
